@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Result</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            margin: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            position: relative;
+            transition: background-color 0.3s ease; /* Smooth transition for background */
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Left Section: Audio File and History */
+        .audio-section {
+            width: 50%;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .history-section {
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-section h3 {
+            font-size: 1.4em;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .history-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .history-section ul li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .history-section ul li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .history-section ul li a:hover {
+            text-decoration: underline;
+            color: #007bff;
+        }
+
+        .audio-section audio {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+        }
+
+        /* Chatbot Icon */
+        .chatbot-icon {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: 2em;
+            animation: moveUpDown 3s ease-in-out infinite; /* Reduced movement */
+        }
+
+        /* Reduce movement */
+        @keyframes moveUpDown {
+            0% { bottom: 30px; }
+            50% { bottom: 70px; }
+            100% { bottom: 30px; }
+        }
+
+        /* Add Robot Image inside Chatbot Icon */
+        .chatbot-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Right Section: Chatbot */
+        .chatbot-section {
+            width: 50%;
+            padding: 20px;
+            background-color: #f8f9fa;
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbox {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+            padding: 15px;
+            overflow-y: auto;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbox div {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .chatbox div.bot-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-start;
+        }
+
+        .chatbox div.user-message {
+            background-color: #e9ecef;
+            align-self: flex-end;
+        }
+
+        .input-box {
+            display: flex;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-box input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 0;
+            font-size: 1em;
+        }
+
+        .input-box button {
+            padding: 15px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .input-box button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Background change when the chat is hidden */
+        body.chat-open {
+            background: url('your-background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Left Section: Audio and History -->
+    <div class="audio-section">
+        <div class="history-section">
+            <h3>History</h3>
+            <ul>
+                <li>
+                    <a href="/uploads/sample1.pdf" target="_blank">sample1.pdf</a>
+                    <a href="/uploads/sample1.mp3" target="_blank">Audio</a>
+                </li>
+                <li>
+                    <a href="/uploads/sample2.pdf" target="_blank">sample2.pdf</a>
+                    <a href="/uploads/sample2.mp3" target="_blank">Audio</a>
+                </li>
+            </ul>
+        </div>
+        <h2>Converted Audio</h2>
+        <audio controls>
+            <source src="{{ audio_url }}" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <!-- Right Section: AI Chatbot (Initially Hidden) -->
+    <div class="chatbot-section" id="chatbotSection">
+        <h2>AI Assistant</h2>
+        <div class="chatbox" id="chatbox">
+            <div class="bot-message">
+                Hello! Welcome to your AI Assistant. 😊<br>
+                Type your queries in the box below, and I'll help you!
+            </div>
+        </div>
+        <div class="input-box">
+            <input type="text" id="userInput" placeholder="Type your query here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Chatbot Icon (Floating with Robot Image) -->
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+        <img src="ai robot.jpeg" alt="Robot Icon"> <!-- Replace with actual robot image URL -->
+    </div>
+
+    <script>
+        const chatbox = document.getElementById("chatbox");
+        const chatbotSection = document.getElementById("chatbotSection");
+        const body = document.body;
+
+        function toggleChatbot() {
+            // Toggle the visibility of the chat section
+            if (chatbotSection.style.display === "none" || chatbotSection.style.display === "") {
+                chatbotSection.style.display = "flex";
+                document.querySelector(".chatbot-icon").style.display = "none"; // Hide the icon
+                body.classList.add("chat-open"); // Apply background image when chat is open
+            } else {
+                chatbotSection.style.display = "none";
+                document.querySelector(".chatbot-icon").style.display = "flex"; // Show the icon again
+                body.classList.remove("chat-open"); // Remove background when chat is closed
+            }
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (userInput.trim() !== "") {
+                appendMessage("user-message", userInput);
+
+                // Simulate AI response
+                setTimeout(() => {
+                    appendMessage("bot-message", "This is an AI response to: " + userInput);
+                }, 1000);
+
+                document.getElementById("userInput").value = "";
+            }
+        }
+
+        function appendMessage(type, message) {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add(type);
+            messageDiv.textContent = message;
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

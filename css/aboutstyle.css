@@ -1,0 +1,204 @@
+/* General body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Header Styling */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+nav a {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* About Section */
+.about-us {
+    padding: 60px 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.about-heading h2 {
+    font-size: 36px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.about-heading p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* About Image and Description */
+.about-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.about-img {
+    flex: 1;
+    padding-right: 30px;
+}
+
+.about-img img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.about-description {
+    flex: 2;
+    padding-left: 30px;
+}
+
+.about-description h3 {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-description p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Team Section */
+.team {
+    background-color: #f4f4f4;
+    padding: 50px 20px;
+}
+
+.team h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #4CAF50;
+}
+
+.team-member {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    margin: 20px;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.team-member h4 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.team-member p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Values Section */
+.values {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.values h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #4CAF50;
+}
+
+.value {
+    display: inline-block;
+    width: 30%;
+    padding: 20px;
+    margin: 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.value h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.value p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Footer */
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-img {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .about-description {
+        padding-left: 0;
+    }
+
+    .team-member {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .value {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
