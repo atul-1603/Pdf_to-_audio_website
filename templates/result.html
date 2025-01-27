@@ -14,13 +14,14 @@
 
         body {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 0;
             height: 100vh;
             font-family: 'Arial', sans-serif;
             color: #333;
             background: linear-gradient(to right, #f8f9fa, #e9ecef);
-            position: relative;
-            transition: background-color 0.3s ease; /* Smooth transition for background */
+            transition: background-color 0.3s ease;
         }
 
         h2 {
@@ -36,7 +37,7 @@
 
         /* Left Section: Audio File and History */
         .audio-section {
-            width: 50%;
+            width: 45%;
             padding: 20px;
             background-color: #ffffff;
             box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
@@ -44,45 +45,51 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            margin: 30px;
+            border-radius: 15px;
         }
 
         .history-section {
             width: 100%;
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
-            margin-bottom: 20px;
-            background-color: #f8f9fa;
+            margin-bottom: 50px;
+            background-color: #ffffff;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 20px;
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .history-section:hover {
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            background-color: #f8f9fa;
         }
 
         .history-section h3 {
             font-size: 1.4em;
             color: #007bff;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        .history-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .history-section ul li {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .history-section ul li a {
-            color: #333;
+        .history-button {
+            display: inline-block;
+            padding: 15px 25px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 30px;
+            font-size: 1.2em;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
             text-decoration: none;
         }
 
-        .history-section ul li a:hover {
-            text-decoration: underline;
-            color: #007bff;
+        .history-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .audio-section audio {
@@ -93,117 +100,66 @@
             border-radius: 5px;
         }
 
-        /* Chatbot Icon */
-        .chatbot-icon {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background-color: #007bff;
-            border-radius: 50%;
+        /* Right Section: AI Chatbot */
+        .chat-section {
+            width: 45%;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
             display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            margin: 50px;
+            border-radius: 15px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-section h2 {
+            font-size: 1.8em;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .chat-section p {
+            font-size: 1.2em;
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Arrow Animation */
+        .arrow {
+            display: flex;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            color: white;
-            font-size: 2em;
-            animation: moveUpDown 3s ease-in-out infinite; /* Reduced movement */
+            align-items: center;
+            margin-top: 20px;
+            animation: bounce 1.5s infinite;
         }
 
-        /* Reduce movement */
-        @keyframes moveUpDown {
-            0% { bottom: 30px; }
-            50% { bottom: 70px; }
-            100% { bottom: 30px; }
-        }
-
-        /* Add Robot Image inside Chatbot Icon */
-        .chatbot-icon img {
+        .arrow img {
             width: 50px;
             height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
         }
 
-        /* Right Section: Chatbot */
-        .chatbot-section {
-            width: 50%;
-            padding: 20px;
-            background-color: #f8f9fa;
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .chatbox {
-            flex: 1;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #ffffff;
-            padding: 15px;
-            overflow-y: auto;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .chatbox div {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .chatbox div.bot-message {
-            background-color: #007bff;
-            color: white;
-            align-self: flex-start;
-        }
-
-        .chatbox div.user-message {
-            background-color: #e9ecef;
-            align-self: flex-end;
-        }
-
-        .input-box {
-            display: flex;
-            margin-top: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .input-box input {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-right: none;
-            border-radius: 0;
-            font-size: 1em;
-        }
-
-        .input-box button {
-            padding: 15px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        .input-box button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Background change when the chat is hidden */
-        body.chat-open {
-            background: url('your-background-image.jpg') no-repeat center center fixed;
-            background-size: cover;
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
     </style>
@@ -212,17 +168,8 @@
     <!-- Left Section: Audio and History -->
     <div class="audio-section">
         <div class="history-section">
-            <h3>History</h3>
-            <ul>
-                <li>
-                    <a href="/uploads/sample1.pdf" target="_blank">sample1.pdf</a>
-                    <a href="/uploads/sample1.mp3" target="_blank">Audio</a>
-                </li>
-                <li>
-                    <a href="/uploads/sample2.pdf" target="_blank">sample2.pdf</a>
-                    <a href="/uploads/sample2.mp3" target="_blank">Audio</a>
-                </li>
-            </ul>
+            <h3>Access Your Uploaded Files and Generated Audio</h3>
+            <a href="history.html" class="history-button">View Your History</a>
         </div>
         <h2>Converted Audio</h2>
         <audio controls>
@@ -231,65 +178,17 @@
         </audio>
     </div>
 
-    <!-- Right Section: AI Chatbot (Initially Hidden) -->
-    <div class="chatbot-section" id="chatbotSection">
-        <h2>AI Assistant</h2>
-        <div class="chatbox" id="chatbox">
-            <div class="bot-message">
-                Hello! Welcome to your AI Assistant. 😊<br>
-                Type your queries in the box below, and I'll help you!
-            </div>
-        </div>
-        <div class="input-box">
-            <input type="text" id="userInput" placeholder="Type your query here...">
-            <button onclick="sendMessage()">Send</button>
+    <!-- Right Section: AI Chatbot -->
+    <div class="chat-section">
+        <h2>Need Help?</h2>
+        <p>Click the AI message icon below for assistance.</p>
+        <div class="arrow">
+            <img src="down-arrow.png" alt="Down Arrow">
         </div>
     </div>
 
-    <!-- Chatbot Icon (Floating with Robot Image) -->
-    <div class="chatbot-icon" onclick="toggleChatbot()">
-        <img src="ai robot.jpeg" alt="Robot Icon"> <!-- Replace with actual robot image URL -->
-    </div>
-
-    <script>
-        const chatbox = document.getElementById("chatbox");
-        const chatbotSection = document.getElementById("chatbotSection");
-        const body = document.body;
-
-        function toggleChatbot() {
-            // Toggle the visibility of the chat section
-            if (chatbotSection.style.display === "none" || chatbotSection.style.display === "") {
-                chatbotSection.style.display = "flex";
-                document.querySelector(".chatbot-icon").style.display = "none"; // Hide the icon
-                body.classList.add("chat-open"); // Apply background image when chat is open
-            } else {
-                chatbotSection.style.display = "none";
-                document.querySelector(".chatbot-icon").style.display = "flex"; // Show the icon again
-                body.classList.remove("chat-open"); // Remove background when chat is closed
-            }
-        }
-
-        function sendMessage() {
-            const userInput = document.getElementById("userInput").value;
-            if (userInput.trim() !== "") {
-                appendMessage("user-message", userInput);
-
-                // Simulate AI response
-                setTimeout(() => {
-                    appendMessage("bot-message", "This is an AI response to: " + userInput);
-                }, 1000);
-
-                document.getElementById("userInput").value = "";
-            }
-        }
-
-        function appendMessage(type, message) {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add(type);
-            messageDiv.textContent = message;
-            chatbox.appendChild(messageDiv);
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-    </script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/01/25/10/20250125104157-7YNXB3UO.js"></script>
 </body>
 </html>
+
