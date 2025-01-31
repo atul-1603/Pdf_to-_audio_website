@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // For hashing passwords
 const fetch = require('node-fetch'); // For calling Wit.ai API
 const app = express();
-const multer = require('multer');
-const fs = require('fs');
+// const fs = require('fs');
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
@@ -36,18 +35,6 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'signup.html')); // Serve signup.html
 });
 
-// Set up storage for uploaded files
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const uploadPath = './uploads';
-        if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath);
-        cb(null, uploadPath);
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    },
-});
-const upload = multer({ storage });
 
 // MongoDB Connection Setup
 const dbURI = 'mongodb+srv://Atul1603:Atuldubey@pdftoaudio.8pkov.mongodb.net/UserDataBase?retryWrites=true&w=majority&appName=PdfToAudio';
@@ -63,51 +50,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
-
-const fileSchema = new mongoose.Schema({
-    fileName: { type: String, required: true },
-    pdfPath: { type: String, required: true },
-    audioPath: { type: String, required: true },
-    uploadDate: { type: Date, default: Date.now },
-});
-
-const File = mongoose.model('File', fileSchema);
-
-// Handle file conversion and database storage
-app.post('/convert', upload.single('file'), async (req, res) => {
-    try {
-        const { language } = req.body;
-        const pdfPath = req.file.path;
-
-        // Simulate audio file creation
-        const audioPath = `uploads/audio-${Date.now()}.mp3`;
-        fs.writeFileSync(audioPath, 'Sample audio content'); // Replace with actual audio generation logic
-
-        // Save file details to MongoDB
-        const newFile = new File({
-            fileName: req.file.originalname,
-            pdfPath,
-            audioPath,
-        });
-        await newFile.save();
-
-        res.status(201).json(newFile);
-    } catch (error) {
-        console.error('Error during file upload:', error.message);
-        res.status(500).json({ error: 'File upload failed' });
-    }
-});
-
-// Fetch history dynamically
-app.get('/api/history', async (req, res) => {
-    try {
-        const files = await File.find();
-        res.status(200).json(files);
-    } catch (error) {
-        console.error('Error fetching history:', error.message);
-        res.status(500).json({ error: 'Failed to fetch history' });
-    }
-});
 
 // Handle signup form submission (POST)
 app.post('/signup', async (req, res) => {

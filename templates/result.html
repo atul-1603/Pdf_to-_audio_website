@@ -21,6 +21,7 @@
             font-family: 'Arial', sans-serif;
             color: #333;
             background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            background: url('/static/pdftoaudio.webp') no-repeat center center/cover;
             transition: background-color 0.3s ease;
         }
 
@@ -37,7 +38,7 @@
 
         /* Left Section: Audio File and History */
         .audio-section {
-            width: 45%;
+            width: 35%;
             padding: 20px;
             background-color: #ffffff;
             box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
@@ -102,7 +103,7 @@
 
         /* Right Section: AI Chatbot */
         .chat-section {
-            width: 45%;
+            width: 35%;
             padding: 20px;
             background-color: #ffffff;
             box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
@@ -169,7 +170,9 @@
     <div class="audio-section">
         <div class="history-section">
             <h3>Access Your Uploaded Files and Generated Audio</h3>
-            <a href="history.html" class="history-button">View Your History</a>
+            <a href="{{ url_for('history_page') }}" class="history-button">
+                <button>View History</button>
+            </a>            
         </div>
         <h2>Converted Audio</h2>
         <audio controls>
@@ -181,9 +184,9 @@
     <!-- Right Section: AI Chatbot -->
     <div class="chat-section">
         <h2>Need Help?</h2>
-        <p>Click the AI message icon below for assistance.</p>
+        <p>Click the AI Button icon below for assistance.</p>
         <div class="arrow">
-            <img src="down-arrow.png" alt="Down Arrow">
+            <img src="/static/down-arrow.png" alt="Down Arrow">
         </div>
     </div>
 
@@ -191,4 +194,3 @@
     <script src="https://files.bpcontent.cloud/2025/01/25/10/20250125104157-7YNXB3UO.js"></script>
 </body>
 </html>
-
