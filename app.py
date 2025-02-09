@@ -26,10 +26,21 @@ db = client['UserDataBase']
 history_collection = db['history']
 fs = GridFS(db)  # Initialize GridFS
 
+@app.route('/css/<path:filename>')
+def serve_css(filename):
+    print(f"Serving CSS: {filename}")  # Debugging output
+    return send_from_directory(os.path.join(app.root_path, 'css'), filename)
+
+@app.route('/js/<path:filename>')
+def serve_js(filename):
+    print(f"Serving JS: {filename}")  # Debugging output
+    return send_from_directory(os.path.join(app.root_path, 'js'), filename)
+
 # Directory paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app = Flask(__name__, static_folder='static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
@@ -71,15 +82,20 @@ def convert():
         audio_filename = f"{os.path.splitext(filename)[0]}_{language}_{voice_type}.mp3"
         audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio_filename)
 
-        if voice_type == "male":
-            engine = pyttsx3.init()
-            voices = engine.getProperty('voices')
-            engine.setProperty('voice', voices[0].id)  # Select male voice
-            engine.save_to_file(translated_text, audio_path)
-            engine.runAndWait()
-        else:
-            tts = gTTS(translated_text, lang=language)
+        if language == "hi":  # Use gTTS for Hindi, no male/female distinction
+            tts = gTTS(translated_text, lang="hi")
             tts.save(audio_path)
+        else:
+            if voice_type == "male":
+                engine = pyttsx3.init()
+                voices = engine.getProperty('voices')
+                engine.setProperty('voice', voices[0].id)  # Select male voice
+                engine.save_to_file(translated_text, audio_path)
+                engine.runAndWait()
+            else:
+                tts = gTTS(translated_text, lang=language)
+                tts.save(audio_path)
+
 
         logging.debug(f"Audio file saved at: {audio_path}")
 
@@ -140,7 +156,7 @@ def get_history():
             return jsonify({"error": "No history found"}), 404
 
         for file in history_data:
-            file['pdf_url'] = url_for('download_file', file_id=str(file['pdf_id']))
+            file['pdf_url'] = url_for('view_pdf', file_id=str(file['pdf_id']))  # Updated for viewing PDF in browser
             file['audio_url'] = url_for('download_file', file_id=str(file['audio_id']))
             file['pdf_id'] = str(file['pdf_id'])  # Convert ObjectId to string
             file['audio_id'] = str(file['audio_id'])  # Convert ObjectId to string
@@ -152,6 +168,17 @@ def get_history():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+# New route to view PDF in browser
+@app.route('/view_pdf/<file_id>')
+def view_pdf(file_id):
+    try:
+        file_data = fs.get(ObjectId(file_id))  # Retrieve PDF file from GridFS
+        return Response(file_data.read(), mimetype='application/pdf',
+                        headers={"Content-Disposition": "inline; filename=" + file_data.filename})
+    except Exception as e:
+        logging.error(f"Error retrieving PDF with ID {file_id}: {e}")
+        return jsonify({"error": "File not found"}), 404
 
 @app.route('/download/<file_id>')
 def download_file(file_id):
