@@ -9,39 +9,61 @@ body {
 
 /* Header Styling */
 header {
-    background-color: #4CAF50;
+    background: linear-gradient(to right, #3c95c6, #dda77e);
     color: white;
-    padding: 20px 0;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
 }
 
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
+/* Header Title */
 header h1 {
-    font-size: 36px;
+    font-size: 42px;
     margin: 0;
 }
 
+/* Navigation Styling */
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+/* Styled Navigation Buttons */
 nav a {
-    margin: 0 15px;
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
     color: white;
     text-decoration: none;
     font-size: 18px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
 }
 
+/* Hover Effect */
 nav a:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.4); /* Lighter on hover */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05);
 }
+
 
 /* Hero Section */
 .hero {
-    background-color: #4CAF50;
+    background-color: #04a26d;
     color: white;
     text-align: center;
-    padding: 80px 20px;
+    /* padding: 80px 20px; */
+    display: flex;
+    height: 602px;
 }
 
 .hero h2 {
@@ -56,23 +78,28 @@ nav a:hover {
 
 .hero .cta-button {
     background-color: white;
-    color: #4CAF50;
+    color: #375838;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 22px;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
+    display: inline-block;
+
 }
 
 .hero .cta-button:hover {
-    background-color: #45a049;
+    background-color: #c4f80a;
+    transform: translateY(-5px);
+    color: #333;
 }
 
 /* Steps Section */
 .steps {
-    padding: 50px 20px;
+    padding: 40px 20px;
     text-align: center;
+    background: url("headphone.jpg");
 }
 
 .steps h2 {
@@ -82,11 +109,12 @@ nav a:hover {
 
 .step {
     margin-bottom: 30px;
+    color: white;
 }
 
 .step-number {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #f3f707;
+    color: rgb(4, 0, 0);
     font-size: 28px;
     width: 60px;
     height: 60px;
@@ -94,9 +122,17 @@ nav a:hover {
     display: inline-block;
     text-align: center;
     line-height: 60px;
-    margin-bottom: 15px;
-}
+    /* margin-bottom:; */
+    margin-top: 10px;
 
+}
+.step-number:hover{
+    transition: 0.6s  ease-in-out;
+    width: 70px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 38px;
+}
 .step h3 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -107,10 +143,14 @@ nav a:hover {
     color: #666;
 }
 
+.steps:hover{
+    cursor: pointer;
+}
+
 /* Testimonial Section */
 .testimonial {
-    background-color: #f4f4f4;
-    padding: 50px 20px;
+  background: linear-gradient(to right, #3f87c2, #feb47b);;
+    /* padding: 50px 20px; */
     text-align: center;
 }
 
@@ -122,22 +162,25 @@ nav a:hover {
 .quote {
     margin-bottom: 30px;
     font-style: italic;
-    color: #555;
+    /* color: #0a0a0a; */
+    color: whitesmoke;
 }
 
 .quote cite {
     display: block;
     margin-top: 10px;
     font-size: 16px;
-    color: #777;
+    color: #060606;
 }
 
 /* Footer */
 footer {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #04a26d;
+    /* color: rgb(20, 18, 18); */
+    color:white;
     text-align: center;
     padding: 20px;
+    font-size: 18px;
 }
 
 footer p {
@@ -149,6 +192,7 @@ footer p {
     header .container {
         flex-direction: column;
         text-align: center;
+        height: auto;
     }
 
     .hero h2 {
@@ -174,4 +218,84 @@ footer p {
     .quote {
         font-size: 16px;
     }
+}
+.hv{
+    height: 100px;
+    width: 100px;
+    margin-left: 300px;
+    
+}
+.container2{
+    display: flex;
+}
+#right{
+    margin-left: 50px;
+    margin-top: 20px;
+    height: 150px;
+    width: 150px;
+}
+#left{
+    margin-right: 35px;
+    margin-top: 10px;
+    margin-left: 0;
+    height: 150px;
+    width: 150px;
+}
+.steps {
+    background-image: url('headphone.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 50px 0;
+    position: relative;
+    z-index: 1;
+       background-color: rgba(0, 0, 0, 0.6);/* Dark overlay for better text visibility*/
+} 
+.steps::before {
+    /* content: ""; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.6);  */
+    z-index: 1;
+}
+.steps .container {
+    position: relative;
+    z-index: 2;
+    color: white; /* Ensuring text is visible over the background */
+}
+.impcontent{
+    margin-top: 130px;
+    width: 90%;
+    height: auto;
+}
+.impimage img{
+width: 650px;  
+height: 600px;
+}
+
+.boxes{
+    display: flex;
+    gap: 100px;
+    margin-left: 140px;
+}
+.boxe1{
+    display: flex;
+    gap: 100px;
+    margin-left: 140px;
+    margin-top: 40px;
+}
+.cards{
+    background-color: white;
+    height: auto;
+    width: 300px;
+    box-shadow: 8px 8px 15px #747373, -8px -8px 15px #b1b0b0;
+    border-radius: 20px;
+    
+}
+.cards:hover{
+    box-shadow: none;
+   
 }

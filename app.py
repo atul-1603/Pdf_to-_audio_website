@@ -28,12 +28,10 @@ fs = GridFS(db)  # Initialize GridFS
 
 @app.route('/css/<path:filename>')
 def serve_css(filename):
-    print(f"Serving CSS: {filename}")  # Debugging output
     return send_from_directory(os.path.join(app.root_path, 'css'), filename)
 
 @app.route('/js/<path:filename>')
 def serve_js(filename):
-    print(f"Serving JS: {filename}")  # Debugging output
     return send_from_directory(os.path.join(app.root_path, 'js'), filename)
 
 # Directory paths

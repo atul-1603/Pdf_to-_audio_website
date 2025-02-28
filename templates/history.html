@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,33 +12,40 @@
             padding: 20px;
             background-color: #f9f9f9;
         }
+
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
         }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
+
         .card {
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
+
         .card h2 {
             font-size: 18px;
             margin: 0 0 10px;
         }
+
         .card p {
             color: #666;
             font-size: 14px;
             margin: 0 0 10px;
         }
+
         .buttons {
             margin-top: 10px;
         }
+
         .buttons a {
             text-decoration: none;
             padding: 10px 15px;
@@ -47,25 +55,30 @@
             margin-right: 10px;
             display: inline-block;
         }
+
         .buttons a:first-child {
             color: #007BFF;
             border-color: rgba(0, 123, 255, 0.2);
             background-color: rgba(0, 123, 255, 0.05);
         }
+
         .buttons a:first-child:hover {
             background-color: rgba(0, 123, 255, 0.2);
         }
+
         .buttons a:last-child {
             color: #fff;
             background-color: #000;
             border-color: #000;
         }
+
         .buttons a:last-child:hover {
             background-color: #333;
             border-color: #333;
         }
     </style>
 </head>
+
 <body>
     <h1>Uploaded Files History</h1>
     <div class="grid" id="file-grid">
@@ -104,4 +117,5 @@
         fetchHistory();
     </script>
 </body>
+
 </html>

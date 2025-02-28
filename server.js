@@ -2,37 +2,37 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // For hashing passwords
-const fetch = require('node-fetch'); // For calling Wit.ai API
+const fetch = require('node-fetch'); 
 const app = express();
-// const fs = require('fs');
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // For parsing JSON data in chatbot requests
 
-// Serve static files(e.g., CSS)
+// Serve static files
 app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // Serve main.html as the default page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'main.html')); // Serve main.html by default
+    res.sendFile(path.join(__dirname, 'templates', 'main.html')); // Serve main.html by default
 });
 
 // Routes for all pages
-app.get('/main.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'main.html')); // Serve main.html
+app.get('/templates/main.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'templates', 'main.html')); // Serve main.html
 });
 
-app.get('/aboutus.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'aboutus.html')); // Serve aboutus.html
+app.get('/templates/aboutus.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'templates', 'aboutus.html')); // Serve aboutus.html
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html')); // Serve login.html
+    res.sendFile(path.join(__dirname, 'templates', 'login.html')); // Serve login.html
 });
 
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'signup.html')); // Serve signup.html
+    res.sendFile(path.join(__dirname, 'templates', 'signup.html')); // Serve signup.html
 });
 
 

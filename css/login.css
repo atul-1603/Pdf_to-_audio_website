@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background: linear-gradient(to right, #667eea, #764ba2); */
+    /* background: linear-gradient(to right, #4CAF50, #FFEB3B); */
+    background: url("https://img.freepik.com/free-vector/gradient-geometric-shapes-dark-background_23-2148423542.jpg?ga=GA1.1.1322863782.1740747021&semt=ais_hybrid");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.login-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 350px;
+    width: 100%;
+    animation: fadeIn 0.8s ease-in-out;
+    /* height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; */
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+h1 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+.input-group input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+}
+.input-group label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: #777;
+    transition: 0.3s;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: 5px;
+    left: 10px;
+    font-size: 0.75rem;
+    color: #667eea;
+}
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.error-message.visible {
+    opacity: 1;
+}
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn:hover {
+    background: #5762d5;
+    transform: scale(1.05);
+}
+p {
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+a {
+    color: #667eea;
+    text-decoration: none;
+    transition: 0.3s;
+}
+a:hover {
+    text-decoration: underline;
+}
