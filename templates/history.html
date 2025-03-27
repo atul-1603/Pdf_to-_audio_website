@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,41 +11,35 @@
             padding: 20px;
             background-color: #f9f9f9;
         }
-
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
         }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
-
         .card {
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            position: relative;
         }
-
         .card h2 {
             font-size: 18px;
             margin: 0 0 10px;
         }
-
         .card p {
             color: #666;
             font-size: 14px;
             margin: 0 0 10px;
         }
-
         .buttons {
             margin-top: 10px;
         }
-
-        .buttons a {
+        .buttons a, .delete-btn {
             text-decoration: none;
             padding: 10px 15px;
             border: 1px solid;
@@ -54,32 +47,40 @@
             font-size: 14px;
             margin-right: 10px;
             display: inline-block;
+            cursor: pointer;
         }
-
         .buttons a:first-child {
             color: #007BFF;
             border-color: rgba(0, 123, 255, 0.2);
             background-color: rgba(0, 123, 255, 0.05);
         }
-
         .buttons a:first-child:hover {
             background-color: rgba(0, 123, 255, 0.2);
         }
-
         .buttons a:last-child {
             color: #fff;
             background-color: #000;
             border-color: #000;
         }
-
         .buttons a:last-child:hover {
             background-color: #333;
             border-color: #333;
         }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
-
 <body>
+
     <h1>Uploaded Files History</h1>
     <div class="grid" id="file-grid">
         <!-- Dynamic content will be inserted here -->
@@ -99,6 +100,7 @@
                 result.data.forEach(file => {
                     const card = document.createElement('div');
                     card.className = 'card';
+                    card.dataset.fileId = file.pdf_id; // Store file ID for deletion
                     card.innerHTML = `
                         <h2>${file.pdf_filename}</h2>
                         <p>Uploaded on: ${new Date(file.upload_date).toLocaleString()}</p>
@@ -106,6 +108,7 @@
                             <a href="/view_pdf/${file.pdf_id}" target="_blank">View PDF</a>
                             <a href="${file.audio_url}" target="_blank">Listen to Audio</a>
                         </div>
+                        <button class="delete-btn" onclick="deleteFile('${file.pdf_id}', this)">Delete</button>
                     `;
                     grid.appendChild(card);
                 });
@@ -114,8 +117,32 @@
             }
         }
 
+        async function deleteFile(fileId, button) {
+            if (!confirm("Are you sure you want to delete this file?")) return;
+
+            try {
+                const response = await fetch('/delete_file', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ file_id: fileId })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert("File deleted successfully.");
+                    button.closest('.card').remove(); // Remove card from UI
+                } else {
+                    alert(result.error || "Failed to delete file.");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
         fetchHistory();
     </script>
-</body>
 
+</body>
 </html>

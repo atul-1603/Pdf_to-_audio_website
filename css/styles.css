@@ -1,6 +1,8 @@
 /* General body styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
@@ -42,6 +44,7 @@ nav a {
     color: white;
     text-decoration: none;
     font-size: 18px;
+    font-family:cursive;
     padding: 10px 18px;
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
@@ -58,7 +61,8 @@ nav a:hover {
 
 /* Hero Section */
 .hero {
-    background-color: #04a26d;
+    /* background-color: #04a26d; */
+    background: linear-gradient(180deg, #4568dc, #b06ab3);
     color: white;
     text-align: center;
     /* padding: 80px 20px; */
@@ -152,6 +156,7 @@ nav a:hover {
   background: linear-gradient(to right, #3f87c2, #feb47b);;
     /* padding: 50px 20px; */
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .testimonial h2 {
@@ -179,7 +184,7 @@ footer {
     /* color: rgb(20, 18, 18); */
     color:white;
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     font-size: 18px;
 }
 

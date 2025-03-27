@@ -9,8 +9,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /* background: linear-gradient(to right, #667eea, #764ba2); */
-    /* background: linear-gradient(to right, #4CAF50, #FFEB3B); */
     background: url("https://img.freepik.com/free-vector/gradient-geometric-shapes-dark-background_23-2148423542.jpg?ga=GA1.1.1322863782.1740747021&semt=ais_hybrid");
     background-size: cover;
     background-repeat: no-repeat;
@@ -24,11 +22,6 @@ body {
     max-width: 350px;
     width: 100%;
     animation: fadeIn 0.8s ease-in-out;
-    /* height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column; */
 }
 @keyframes fadeIn {
     from {

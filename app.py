@@ -2,22 +2,27 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug.utils import secure_filename
 from gtts import gTTS
 import pyttsx3  # For local voice synthesis
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 import os
 import logging
 from pymongo import MongoClient
-from PyPDF2 import PdfReader
 from datetime import datetime
 from gridfs import GridFS  # Import GridFS for file storage
 from bson import ObjectId  # To handle MongoDB ObjectIds
 from flask import Response
+import fitz  # MuPDFrun 
+import pytesseract
+from pdf2image import convert_from_path
+from PIL import Image
+import io
+
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = 'ee392d5b198f5f72857fb4bbde2b6d2f'
 
 # MongoDB Atlas Connection
 MONGO_URI = "mongodb+srv://Atul1603:Atuldubey@pdftoaudio.8pkov.mongodb.net/UserDataBase?retryWrites=true&w=majority&appName=PdfToAudio"
@@ -41,6 +46,25 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app = Flask(__name__, static_folder='static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def extract_text_mupdf(pdf_path):
+    doc = fitz.open(pdf_path)
+    extracted_text = []
+
+    for page in doc:
+        text = page.get_text()  # Extract text from the page
+        if text.strip():
+            extracted_text.append(text)
+        else:
+            # If no text is found, use OCR on the page
+            images = convert_from_path(pdf_path, first_page=page.number+1, last_page=page.number+1)
+            for img in images:
+                img_bytes = io.BytesIO()
+                img.save(img_bytes, format='PNG')
+                ocr_text = pytesseract.image_to_string(Image.open(img_bytes))
+                extracted_text.append(ocr_text)
+
+    return "\n".join(extracted_text)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -61,20 +85,18 @@ def convert():
         pdf_file.save(file_path)
         logging.debug(f"PDF saved at: {file_path}")
 
-        # Extract text from PDF
-        reader = PdfReader(file_path)
-        text = ''.join([page.extract_text() for page in reader.pages if page.extract_text()])
+        # Extract text using MuPDF and OCR
+        text = extract_text_mupdf(file_path)
         
         if not text.strip():
             flash("The uploaded PDF does not contain readable text.", "error")
             return redirect(url_for('index'))
-        
+
         logging.debug(f"Extracted text: {text[:100]}...")
 
         # Translate text
-        translator = Translator()
-        translated_text = translator.translate(text, dest=language).text
-        logging.debug(f"Translated text: {translated_text[:100]}...")
+        translated_text = GoogleTranslator(source='auto', target=language).translate(text)
+        logging.debug(f"Translated text: {translated_text[:100]}...")  # Debugging translation output
 
         # Generate audio
         audio_filename = f"{os.path.splitext(filename)[0]}_{language}_{voice_type}.mp3"
@@ -93,7 +115,6 @@ def convert():
             else:
                 tts = gTTS(translated_text, lang=language)
                 tts.save(audio_path)
-
 
         logging.debug(f"Audio file saved at: {audio_path}")
 
@@ -187,6 +208,37 @@ def download_file(file_id):
     except Exception as e:
         logging.error(f"Error retrieving file with ID {file_id}: {e}")
         return jsonify({"error": "File not found"}), 404
+    
+@app.route('/delete_file', methods=['POST'])
+def delete_file():
+    try:
+        data = request.get_json()
+        file_id = data.get('file_id')
+
+        if not file_id:
+            return jsonify({"error": "File ID is required"}), 400
+
+        file_id_obj = ObjectId(file_id)
+
+        # Find the file in the history collection
+        file_entry = history_collection.find_one({"pdf_id": file_id_obj})
+
+        if not file_entry:
+            return jsonify({"error": "File not found in history"}), 404
+
+        # Delete files from GridFS
+        fs.delete(file_entry['pdf_id'])  # Delete PDF file
+        fs.delete(file_entry['audio_id'])  # Delete audio file
+
+        # Remove file metadata from history collection
+        history_collection.delete_one({"pdf_id": file_id_obj})
+
+        return jsonify({"message": "File deleted successfully"})
+
+    except Exception as e:
+        logging.error(f"Error deleting file: {e}")
+        return jsonify({"error": str(e)}), 500
+
     
 if __name__ == '__main__':
     app.run(debug=True)

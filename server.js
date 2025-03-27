@@ -2,12 +2,12 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // For hashing passwords
-const fetch = require('node-fetch'); 
 const app = express();
+require('dotenv').config();
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // For parsing JSON data in chatbot requests
+app.use(express.json()); // For parsing JSON data
 
 // Serve static files
 app.use('/css', express.static(path.join(__dirname, 'css')));
@@ -89,7 +89,7 @@ app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (user && (await bcrypt.compare(password, user.password))) {
-            res.status(200).json({ success: true, redirect: 'http://127.0.0.1:5000/' });
+            res.status(200).json({ success: true, redirect: process.env.FLASK_PORT });
         } else {
             res.status(401).json({ error: 'Invalid credentials.' });
         }
@@ -106,7 +106,7 @@ app.use((req, res) => {
 });
 
 // Start the Express server
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Express server is running on http://localhost:${PORT}`);
+const port = process.env.PORT;
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
 });

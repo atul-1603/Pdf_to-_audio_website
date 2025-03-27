@@ -19,32 +19,48 @@
             text-align: center;
             padding: 20px 0;
             font-size: 40px;
-            height: auto;
+            position: relative;
         }
 
-        /* Container for the form */
+        .result-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background-color: #035137;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .result-btn:hover {
+            background-color: #0c684a;
+        }
+
         .container {
             max-width: 800px;
             margin: 50px auto;
             background-color: white;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            padding: 20px;
         }
 
         .adj {
             margin-left: 10px;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         h2 {
             text-align: center;
             color: #333;
-            /* margin-bottom: 30px; */
             font-size: 32px;
-            margin-top: 20px;
-        }
-
-        .container h2 {
             margin-top: 20px;
         }
 
@@ -57,7 +73,7 @@
 
         input[type="file"],
         select {
-            width: 420px;
+            width: 100%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #666565;
@@ -70,7 +86,7 @@
         }
 
         button {
-            width: 300px;
+            width: 100%;
             padding: 12px;
             background-color: #035137;
             border: none;
@@ -79,8 +95,6 @@
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-left: 250px;
-            margin-bottom: 20px;
             margin-top: 20px;
         }
 
@@ -95,22 +109,39 @@
             color: #090909;
         }
 
-        /* For mobile devices */
+        .conversion img {
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
         @media (max-width: 600px) {
             .container {
                 margin: 20px;
                 padding: 15px;
             }
 
+            .adj {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .conversion img {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .result-btn {
+                position: static;
+                display: block;
+                text-align: center;
+                margin: 10px auto;
+            }
+
             button {
                 font-size: 1em;
             }
-        }
-
-        .conversion {
-            height: 300px;
-            width: 300px;
-            margin-left: 20px;
         }
     </style>
 </head>
@@ -119,19 +150,17 @@
 
     <header>
         PDF to Audio Converter
+        <a href="/result" class="result-btn">Go to Dashboard</a>
     </header>
 
     <div class="container">
-        <h2 style="margin-top: 20px;">Convert Your PDF to Audio</h2>
+        <h2>Convert Your PDF to Audio</h2>
 
         <div class="adj">
             <div>
                 <form action="/convert" method="POST" enctype="multipart/form-data">
                     <label for="file">Upload PDF File</label>
-                    <input style="width: 400px; border: 1px solid gray;" type="file" id="file" name="file" accept=".pdf"
-                        required onmouseover="this.style.border='2px solid black'"
-                        onmouseout="this.style.border='1px solid gray'">
-
+                    <input type="file" id="file" name="file" accept=".pdf" required>
 
                     <label for="language">Select Language</label>
                     <select id="language" name="language" required>
@@ -141,26 +170,29 @@
                         <option value="de">German</option>
                         <option value="it">Italian</option>
                         <option value="pt">Portuguese</option>
-                        <option value="hi">Hindi</option> <!-- Add Hindi language option -->
+                        <option value="hi">Hindi</option>
                     </select>
+
                     <label for="voice">Select Voice</label>
                     <select id="voice" name="voice" required>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
+
+                    <button type="submit">Convert to Audio</button>
+                </form>
             </div>
             <div class="conversion">
-                <img class="conversion" src="/static/pdfconvert.jpg" alt="First Image">
+                <img src="/static/pdfconvert.jpg" alt="PDF Conversion Image">
             </div>
         </div>
-        <button type="submit">Convert to Audio</button>
-        </form>
-
     </div>
 
     <footer class="footer">
         <p>&copy; 2024 PDF to Audio Converter | All rights reserved.</p>
     </footer>
+
+
     <script>
         const form = document.getElementById('convert-form');
         form.addEventListener('submit', function (e) {
@@ -204,5 +236,3 @@
     </script>
 
 </body>
-
-</html>
